@@ -3,24 +3,21 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 &trackball_listener {
+    // ポインタ値の反転（既存）
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)
-	&zip_temp_layer 5 10000>;
+                        // ★ 追加：ポインタ入力が来たら一時的にレイヤー 5 を有効化、10,000ms で解除
+                        &zip_temp_layer 5 10000>;
 
-scroller {
-	    layers = <6>;
-        input-processors = <&zip_xy_to_scroll_mapper>, <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT)>, <&zip_scroll_scaler 11 130>;
+    scroller {
+        layers = <6>;
+        input-processors = <&zip_xy_to_scroll_mapper>,
+                           <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT)>,
+                           <&zip_scroll_scaler 11 130>;
         process-next;
     };
 };
 
-&size_s_transform {
-    col-offset = <7>;
-};
-
-&size_m_transform {
-    col-offset = <7>;
-};
-
-&size_l_transform {
-    col-offset = <7>;
-};
+// 既存の列オフセット設定
+&size_s_transform { col-offset = <7>; };
+&size_m_transform { col-offset = <7>; };
+&size_l_transform { col-offset = <7>; };
