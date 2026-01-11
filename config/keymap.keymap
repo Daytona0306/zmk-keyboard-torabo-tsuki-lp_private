@@ -98,7 +98,7 @@
 &trans  &kp Q             &kp L     &kp U    &kp COMMA                    &kp PERIOD                                             &kp F        &kp W   &kp R    &kp Y            &kp P                       &trans
 &trans  &mt LCTRL E       &kp I     &lt 5 A  &lt 3 O                      &kp MINUS      &trans                      &trans      &kp K        &kp T   &lt 5 N  &kp S            &kp H                       &trans
 &trans  &mt LEFT_SHIFT Z  &kp X     &kp C    &kp V                        &kp SEMICOLON  &kp LA(LG(K))               &kp C_MUTE  &kp G        &kp D   &kp M    &mt RIGHT_ALT J  &lt 3 B                     &trans
-&trans  &kp LEFT_ALT      &kp LGUI  &kp TAB  &mt LEFT_SHIFT INT_MUHENKAN  &lt 4 ENTER    &mt LEFT_CONTROL BACKSPACE  &lt 2 DEL   &lt 1 SPACE  &trans  &trans   &to 3            &mt RIGHT_SHIFT INT_HENKAN  &trans
+&trans  &kp LEFT_ALT      &kp LGUI  &kp TAB  &mt LEFT_SHIFT INT_MUHENKAN  &lt 4 ENTER    &mt LEFT_CONTROL BACKSPACE  &lt 2 DEL   &lt 1 SPACE  &trans  &trans   &kp RIGHT_ALT    &mt RIGHT_SHIFT INT_HENKAN  &trans
             >;
         };
 
@@ -108,7 +108,7 @@
 &trans  &kp NUMBER_1              &kp NUMBER_2              &kp NUMBER_3     &kp NUMBER_4               &kp N5                                   &kp NUMBER_6   &kp N7                &kp N8             &kp N9                &kp N0          &trans
 &trans  &kp EQUAL                 &kp LEFT_BRACKET          &kp SLASH        &kp MINUS                  &kp LS(INTERNATIONAL_1)  &trans  &trans  &kp SEMICOLON  &kp SQT               &kp RIGHT_BRACKET  &kp BACKSLASH         &kp INT_YEN     &trans
 &trans  &kp LS(LA(LC(NUMBER_2)))  &kp LS(LC(LA(NUMBER_6)))  &kp PRINTSCREEN  &kp LS(LG(S))              &kp LA(PRINTSCREEN)      &trans  &trans  &kp CAPSLOCK   &kp LS(LC(NUMBER_2))  &kp LS(LC(I))      &kp LS(LC(NUMBER_1))  &kp SCROLLLOCK  &trans
-&trans  &trans                    &trans                    &trans           &mt LEFT_SHIFT LANGUAGE_1  &trans                   &trans  &trans  &trans         &trans                &trans             &trans                &trans          &trans
+&trans  &trans                    &trans                    &trans           &mt LEFT_SHIFT LANGUAGE_1  &trans                   &trans  &trans  &trans         &trans                &trans             &trans                &to 3           &trans
             >;
         };
 
@@ -128,7 +128,7 @@
 &trans  &kp ESCAPE  &kp N7        &kp N8            &kp N9        &trans                        &kp C_MUTE  &kp C_VOL_DN  &kp C_VOLUME_UP  &trans    &trans    &trans
 &trans  &kp EQUAL   &kp NUMBER_4  &kp N5            &kp NUMBER_6  &kp KP_MINUS  &trans  &trans  &mkp MB5    &trans        &mo 4            &trans    &mkp MB5  &trans
 &trans  &kp N0      &kp NUMBER_1  &kp NUMBER_2      &kp NUMBER_3  &kp KP_PLUS   &trans  &trans  &mkp MB4    &mkp MB1      &mkp MB3         &mkp MB2  &mkp MB4  &trans
-&trans  &kp DOT     &kp COMMA     &kp LEFT_BRACKET  &trans        &trans        &trans  &trans  &trans      &trans        &trans           &to 0     &trans    &trans
+&trans  &kp DOT     &kp COMMA     &kp LEFT_BRACKET  &trans        &trans        &trans  &trans  &trans      &trans        &trans           &to 0     &to 0     &trans
             >;
         };
 
