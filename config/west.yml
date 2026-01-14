@@ -4,8 +4,6 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
-    - name: nuovotaka
-      url-base: https://github.com/nuovotaka
     - name: kot149
       url-base: https://github.com/kot149
   projects:
@@ -28,9 +26,6 @@ manifest:
       revision: main
     - name: zmk-feature-non-lipo-battery-management
       remote: sekigon-gonnoc
-      revision: main
-    - name: zmk-pointing-acceleration-alpha
-      remote: nuovotaka
       revision: main
     - name: zmk-scroll-snap
       remote: kot149
