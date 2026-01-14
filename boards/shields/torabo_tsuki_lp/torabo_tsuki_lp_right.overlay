@@ -3,33 +3,12 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <scroll-snap.dtsi>
 
-/* * ★追加: 加速機能の定義
- * スクロール専用の加速設定を作ります
- */
-/ {
-    scroll_accel: scroll_accel {
-        compatible = "zmk,input-processor-accel";
-        #input-processor-cells = <0>;
-
-        custom {
-            // ベース感度 (値が大きいほどゆっくり、小さいほど敏感)
-            // 2400が標準的ですが、スクロール用なので少し敏感にしています
-            parameter = <2000>;
-            
-            // 加速が効くまでの時間窓 (0で即時)
-            time-window = <0>;
-            
-            // 入力タイプ (相対移動に対して効かせる)
-            input-type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_X INPUT_REL_Y>;
-        };
-    };
-};
+/* 加速設定（scroll_accel）は削除しました */
 
 &trackball_listener {
     status = "okay";
 
-    // 通常時のカーソル移動 (加速なし、一定速度)
+    // 通常時のカーソル移動
     input-processors = 
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
         <&zip_xy_scaler 2 1>;
@@ -38,11 +17,11 @@
     scroller {
         layers = <4>;
         input-processors = 
-            <&scroll_accel>,                    // ★ここで加速を適用！
-            <&zip_xy_to_scroll_mapper>,         // その後、スクロール信号に変換
+            // <&scroll_accel>,                 <-- ここを削除
+            <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
             <&zip_scroll_snap>,                 // スナップ処理
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
-            <&zip_scroll_scaler 1 30>;
+            <&zip_scroll_scaler 1 10>;          // 速度調整 (1/10)
     };
 };
 
