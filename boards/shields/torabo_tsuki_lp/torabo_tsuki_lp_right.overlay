@@ -17,7 +17,7 @@
     scroller {
         layers = <4>;
         input-processors = 
-            // <&scroll_accel>,                 <-- ここを削除
+ 　　　　　　<&pointer_accel>,  // 加速追加
             <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
             <&zip_scroll_snap>,                 // スナップ処理
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
@@ -31,4 +31,16 @@
 
 &size_l_transform {
     col-offset = <7>;
+};
+
+&pointer_accel {  // 参照形式でオーバーライド
+    input-type = <INPUT_EV_REL>;  // 相対入力用
+    codes = <INPUT_REL_X INPUT_REL_Y>;  // XY入力対象（スクロール変換前に適用）
+
+    // プリセット使用時はこれでOK。カスタム例（Level 1、スクロール向け調整）:
+    sensitivity = <1>;     // ベース感度0.001x
+    max-factor = <5000>;      // 最大加速5.0x
+    curve-type = <1>;         // 曲線タイプ: 0=Linear, 1=Mild, 2=Strong
+    // y-boost = <1300>;         // Y軸ブースト1.3x（縦スクロール強調）
+   sensor-dpi = <400>;       // センサーDPI（trackball調整）
 };
