@@ -20,7 +20,7 @@
             <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
             <&zip_scroll_snap>,                 // スナップ処理
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
-            <&zip_scroll_scaler 1 5>;          // 速度調整 (1/5)
+            <&zip_scroll_scaler 1 10>;          // 速度調整 (1/10)
     };
 };
 
