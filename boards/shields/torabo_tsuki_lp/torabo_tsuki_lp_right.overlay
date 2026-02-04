@@ -35,7 +35,7 @@
 &pointer_accel {
     input-type = <INPUT_EV_REL>;
     codes = <INPUT_REL_X INPUT_REL_Y>;
-    min-factor = <10000>;
+    sensitivity = <3000>;
     max-factor = <10000000000>;
     curve-type = <5>;
     sensor-dpi = <600>;
