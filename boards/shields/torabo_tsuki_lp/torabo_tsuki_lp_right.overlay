@@ -37,7 +37,7 @@
     codes = <INPUT_REL_X INPUT_REL_Y>;
     sensitivity = <5000000>;
     max-factor = <500>;
-    speed-max = <600000>;
+    speed-max = <60000000>;
     curve-type = <2>;
     sensor-dpi = <600>;
 };
