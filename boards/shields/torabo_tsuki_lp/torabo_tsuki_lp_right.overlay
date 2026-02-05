@@ -2,7 +2,7 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <scroll-snap.dtsi>
-#include <behaviors/input_gestures_accel.dtsi>
+//#include <behaviors/input_gestures_accel.dtsi>
 
 &trackball_listener {
     status = "okay";
