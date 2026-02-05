@@ -36,7 +36,7 @@
     input-type = <INPUT_EV_REL>;
     codes = <INPUT_REL_X INPUT_REL_Y>;
     sensitivity = <1000000>;
-    max-factor = <100000000>;
+    max-factor = <100000000000>;
     curve-type = <5>;
     sensor-dpi = <600>;
 };
