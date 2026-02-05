@@ -4,6 +4,15 @@
 #include <scroll-snap.dtsi>
 //#include <behaviors/input_gestures_accel.dtsi>
 
+/ {
+    x_scaler: x_scaler {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_X>; // X軸だけに作用させる
+    };
+};
+
 &trackball_listener {
     status = "okay";
 
@@ -17,6 +26,7 @@
         layers = <4>;
         input-processors = 
             //<&pointer_accel>,  // 加速追加
+            <&x_scaler 3 1>,
             <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
             <&zip_scroll_snap>,                 // スナップ処理
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
