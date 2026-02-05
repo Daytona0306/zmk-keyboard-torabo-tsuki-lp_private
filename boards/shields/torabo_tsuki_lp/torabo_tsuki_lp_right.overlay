@@ -20,7 +20,7 @@
             <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
             <&zip_scroll_snap>,                 // スナップ処理
             <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
-            <&zip_scroll_scaler 1 50>;          // 速度調整 (1/50)
+            <&zip_scroll_scaler 1 30>;          // 速度調整 (1/30)
     };
 };
 
@@ -35,9 +35,8 @@
 &pointer_accel {
     input-type = <INPUT_EV_REL>;
     codes = <INPUT_REL_X INPUT_REL_Y>;
-    sensitivity = <100000000>;
-    max-factor = <1000000000000>;
-    speed-max = <3500>;
-    curve-type = <2>;
+    sensitivity = <1000>;
+    max-factor = <10000000>;
+    curve-type = <5>;
     sensor-dpi = <600>;
 };
