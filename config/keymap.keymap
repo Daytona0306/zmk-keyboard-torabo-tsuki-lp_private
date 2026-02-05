@@ -104,11 +104,11 @@
 
         NUM,SYM1 {
             bindings = <
-&trans  &trans                    &trans                    &trans           &trans                     &trans                                   &trans         &trans                &trans             &trans                &trans          &trans
-&trans  &kp NUMBER_1              &kp NUMBER_2              &kp NUMBER_3     &kp NUMBER_4               &kp N5                                   &kp NUMBER_6   &kp N7                &kp N8             &kp N9                &kp N0          &trans
-&trans  &kp EQUAL                 &kp LEFT_BRACKET          &kp SLASH        &kp MINUS                  &kp LS(INTERNATIONAL_1)  &trans  &trans  &kp SEMICOLON  &kp SQT               &kp RIGHT_BRACKET  &kp BACKSLASH         &kp INT_YEN     &trans
-&trans  &kp LS(LA(LC(NUMBER_2)))  &kp LS(LC(LA(NUMBER_6)))  &kp PRINTSCREEN  &kp LS(LG(S))              &kp LA(PRINTSCREEN)      &trans  &trans  &kp CAPSLOCK   &kp LS(LC(NUMBER_2))  &kp LS(LC(I))      &kp LS(LC(NUMBER_1))  &kp SCROLLLOCK  &trans
-&trans  &trans                    &trans                    &trans           &mt LEFT_SHIFT LANGUAGE_1  &trans                   &trans  &trans  &trans         &trans                &trans             &trans                &to 3           &trans
+&trans  &trans                    &trans                    &trans           &trans                     &trans                                          &trans         &trans                &trans             &trans                &trans          &trans
+&trans  &kp NUMBER_1              &kp NUMBER_2              &kp NUMBER_3     &kp NUMBER_4               &kp N5                                          &kp NUMBER_6   &kp N7                &kp N8             &kp N9                &kp N0          &trans
+&trans  &kp EQUAL                 &kp LEFT_BRACKET          &kp SLASH        &kp MINUS                  &kp LS(INTERNATIONAL_1)  &trans         &trans  &kp SEMICOLON  &kp SQT               &kp RIGHT_BRACKET  &kp BACKSLASH         &kp INT_YEN     &trans
+&trans  &kp LS(LA(LC(NUMBER_2)))  &kp LS(LC(LA(NUMBER_6)))  &kp PRINTSCREEN  &kp LS(LG(S))              &kp LA(PRINTSCREEN)      &kp LS(LG(V))  &trans  &kp CAPSLOCK   &kp LS(LC(NUMBER_2))  &kp LS(LC(I))      &kp LS(LC(NUMBER_1))  &kp SCROLLLOCK  &trans
+&trans  &trans                    &trans                    &trans           &mt LEFT_SHIFT LANGUAGE_1  &trans                   &trans         &trans  &trans         &trans                &trans             &trans                &to 3           &trans
             >;
         };
 
