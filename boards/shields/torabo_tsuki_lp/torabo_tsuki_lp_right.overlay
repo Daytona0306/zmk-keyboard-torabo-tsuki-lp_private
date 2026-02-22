@@ -10,7 +10,7 @@
 		<&mouse_runtime_input_processor>;
 
     scroller {
-        layers = <4>;
+        //layers = <4>;
         input-processors =			     
 			<&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
             //<&zip_xy_to_scroll_mapper>,
