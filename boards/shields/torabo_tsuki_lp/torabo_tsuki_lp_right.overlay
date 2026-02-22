@@ -16,6 +16,7 @@
 		y-codes = <INPUT_REL_Y>;
 		xy-to-scroll-enabled;
 		active-layers = <9>;
+		y-invert;
 };
 
 &size_s_transform {
