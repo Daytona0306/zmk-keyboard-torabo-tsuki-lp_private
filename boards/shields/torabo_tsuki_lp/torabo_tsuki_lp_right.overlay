@@ -9,11 +9,6 @@
     scroller {
         layers = <4>;
         input-processors = 
-            //<&pointer_accel>,  // 加速追加
-            <&x_scaler 3 2>,
-            <&zip_xy_to_scroll_mapper>,         // スクロール信号に変換
-            //<&zip_scroll_snap>,                 // スナップ処理
-            <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
             <&zip_scroll_scaler 1 20>;          // 速度調整 (1/25)
     };
 
