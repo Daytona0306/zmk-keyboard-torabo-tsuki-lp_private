@@ -114,11 +114,11 @@
 
         SYM2 {
             bindings = <
-&trans  &trans             &trans              &trans            &trans                     &trans                                   &trans                  &trans                   &trans                 &trans                      &trans                       &trans
-&trans  &kp LS(NUMBER_1)   &kp LS(NUMBER_2)    &kp LS(NUMBER_3)  &kp LS(NUMBER_4)           &kp LS(N5)                               &kp LS(NUMBER_6)        &kp LS(N7)               &kp LS(N8)             &kp LS(N9)                  &kp LS(N0)                   &trans
-&trans  &kp LS(EQUAL)      &kp LS(LEFT_BRACE)  &kp QUESTION      &kp LS(UNDERSCORE)         &kp LS(INTERNATIONAL_1)  &trans  &trans  &kp LS(SEMICOLON)       &kp LS(SQT)              &kp LS(RIGHT_BRACKET)  &kp LS(BACKSLASH)           &kp LS(INT_YEN)              &trans
-&trans  &kp LS(LA(MINUS))  &trans              &trans            &BrowsToExploree           &P1                      &trans  &trans  &kp LC(LG(LEFT_ARROW))  &kp LC(LG(RIGHT_ARROW))  &kp LA(LC(LG(D)))      &kp LC(LA(LG(LEFT_ARROW)))  &kp LA(LC(LG(RIGHT_ARROW)))  &trans
-&trans  &trans             &trans              &trans            &mt LEFT_SHIFT LANGUAGE_2  &trans                   &trans  &trans  &trans                  &trans                   &trans                 &trans                      &kp LC(LG(F4))               &trans
+&trans  &trans             &trans              &trans            &trans                     &trans                                          &trans                  &trans                   &trans                 &trans                      &trans                       &trans
+&trans  &kp LS(NUMBER_1)   &kp LS(NUMBER_2)    &kp LS(NUMBER_3)  &kp LS(NUMBER_4)           &kp LS(N5)                                      &kp LS(NUMBER_6)        &kp LS(N7)               &kp LS(N8)             &kp LS(N9)                  &kp LS(N0)                   &trans
+&trans  &kp LS(EQUAL)      &kp LS(LEFT_BRACE)  &kp QUESTION      &kp LS(UNDERSCORE)         &kp LS(INTERNATIONAL_1)  &trans         &trans  &kp LS(SEMICOLON)       &kp LS(SQT)              &kp LS(RIGHT_BRACKET)  &kp LS(BACKSLASH)           &kp LS(INT_YEN)              &trans
+&trans  &kp LS(LA(MINUS))  &trans              &trans            &BrowsToExploree           &P1                      &kp LG(LA(U))  &trans  &kp LC(LG(LEFT_ARROW))  &kp LC(LG(RIGHT_ARROW))  &kp LA(LC(LG(D)))      &kp LC(LA(LG(LEFT_ARROW)))  &kp LA(LC(LG(RIGHT_ARROW)))  &trans
+&trans  &trans             &trans              &trans            &mt LEFT_SHIFT LANGUAGE_2  &trans                   &trans         &trans  &trans                  &trans                   &trans                 &trans                      &kp LC(LG(F4))               &trans
             >;
         };
 
