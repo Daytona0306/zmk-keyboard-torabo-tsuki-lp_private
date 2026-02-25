@@ -2,6 +2,7 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors/runtime-input-processor.dtsi>
+#include <scroll-snap.dtsi>
 
 &trackball_listener {
     input-processors = 
@@ -17,6 +18,7 @@
 		xy-to-scroll-enabled;
 		active-layers = <9>;
 		y-invert;
+        zip_scroll_snap;
 };
 
 &size_s_transform {
