@@ -8,7 +8,8 @@
     input-processors = 
 	    <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
 		<&mouse_runtime_input_processor>,
-		<&scroll_runtime_input_processor>;
+		<&scroll_runtime_input_processor>,
+		<&zip_scroll_snap>;
 };
 
 
@@ -18,7 +19,6 @@
 		xy-to-scroll-enabled;
 		active-layers = <9>;
 		y-invert;
-        scroll_snap;
 };
 
 &size_s_transform {
