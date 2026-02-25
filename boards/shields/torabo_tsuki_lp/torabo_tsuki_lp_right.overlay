@@ -18,7 +18,7 @@
 		xy-to-scroll-enabled;
 		active-layers = <9>;
 		y-invert;
-        zip_scroll_snap;
+        scroll_snap;
 };
 
 &size_s_transform {
