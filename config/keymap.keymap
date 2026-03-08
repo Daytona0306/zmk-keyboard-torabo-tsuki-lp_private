@@ -175,10 +175,3 @@
     };
 };
 
-&trackball_listener {
-    route_arrows {
-        layers = <5>; /* レイヤー5で矢印ジェスチャーを使う */
-        input-processors = <&gesture_arrows>;
-    };
-
-};
