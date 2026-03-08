@@ -5,6 +5,13 @@
 #define GESTURE_RIGHT 3
 
 / {
+    /* --- 標準のマウス移動用のプロセッサをここで定義 --- */
+    /* これを定義することで 'zip_temp_config_scaler' が無いというエラーを防ぎ、通常移動を復活させます */
+    my_standard_scaler: my_standard_scaler {
+        compatible = "zmk,input-processor-temp-config-scaler";
+        #input-processor-cells = <0>;
+    };
+
     /* レイヤーごとの振り分け設定 (Listener Group) */
     trackball_gesture_routing {
         compatible = "zmk,input-listener-group";
@@ -22,10 +29,10 @@
             input-processors = <&gesture_l7_proc>;
         };
 
-        /* 3. 重要：それ以外のすべてのレイヤーでの通常移動 */
+        /* 3. それ以外のすべてのレイヤーでの通常移動 */
         route_cursor {
-            /* 指定のないレイヤーでは通常のカーソル移動として処理する */
-            input-processors = <&zip_temp_config_scaler>;
+            /* 上記で定義した my_standard_scaler を使うことでカーソルが動くようになります */
+            input-processors = <&my_standard_scaler>;
         };
     };
 
@@ -60,7 +67,7 @@
     };
 };
 
-/* 基板側の標準リスナーを無効化（上記の routing に一本化するため） */
+/* 基板側の標準リスナーを無効化（自作の routing に一本化するため） */
 &trackball_listener {
     status = "disabled";
 };
