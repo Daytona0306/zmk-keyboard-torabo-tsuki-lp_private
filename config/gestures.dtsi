@@ -5,43 +5,46 @@
 #define GESTURE_RIGHT 3
 
 / {
-    /* 1. レイヤーごとの振り分け設定 (Listener Group) */
-    /* ssbb/zmk-listeners モジュールにより動作します */
+    /* レイヤーごとの振り分け設定 (Listener Group) */
     trackball_gesture_routing {
         compatible = "zmk,input-listener-group";
         device = <&trackball>;
 
-        /* レイヤー5：矢印ジェスチャー */
+        /* 1. レイヤー5：矢印ジェスチャー */
         route_l5 {
             layers = <5>;
             input-processors = <&gesture_arrows_proc>;
         };
 
-        /* レイヤー7：タブ操作ジェスチャー (参考コードの内容) */
+        /* 2. レイヤー7：タブ操作ジェスチャー */
         route_l7 {
             layers = <7>;
             input-processors = <&gesture_l7_proc>;
         };
+
+        /* 3. 重要：それ以外のすべてのレイヤーでの通常移動 */
+        route_cursor {
+            /* 指定のないレイヤーでは通常のカーソル移動として処理する */
+            input-processors = <&zip_temp_config_scaler>;
+        };
     };
 
-    /* 2. ジェスチャー動作の定義 (Processor) */
+    /* ジェスチャー動作の定義 (Processor) */
     gesture_l7_proc: gesture_l7_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-        stroke-size = <5>;            /* 参考値 */
-        movement-threshold = <6>;      /* 参考値 */
-        idle-timeout-ms = <100>;       /* 参考値 */
-        gesture-cooldown-ms = <120>;   /* 参考値 */
+        stroke-size = <5>;
+        movement-threshold = <6>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <120>;
 
-        /* 参考コードのバインディングを移植 */
         prev_tab    { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
         next_tab    { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
         Create_tab  { pattern = <GESTURE_UP>;    bindings = <&kp LC(T)>;       };
         close_tab   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(W)>;       };
     };
 
-    /* 矢印用 (Processor) */
     gesture_arrows_proc: gesture_arrows_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
@@ -57,7 +60,3 @@
     };
 };
 
-/* 3. 基板側の標準リスナーを無効化 */
-&trackball_listener {
-    status = "disabled";
-};
