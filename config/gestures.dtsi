@@ -5,23 +5,43 @@
 #define GESTURE_RIGHT 3
 
 / {
-    /* レイヤー5：矢印ジェスチャー専用の受信機 */
-    gesture_l5_listener {
-        compatible = "zmk,input-listener";
+    /* 1. レイヤーごとの振り分け設定 (Listener Group) */
+    /* ssbb/zmk-listeners モジュールにより動作します */
+    trackball_gesture_routing {
+        compatible = "zmk,input-listener-group";
         device = <&trackball>;
-        layers = <5>;
-        input-processors = <&gesture_arrows_proc>;
+
+        /* レイヤー5：矢印ジェスチャー */
+        route_l5 {
+            layers = <5>;
+            input-processors = <&gesture_arrows_proc>;
+        };
+
+        /* レイヤー7：タブ操作ジェスチャー (参考コードの内容) */
+        route_l7 {
+            layers = <7>;
+            input-processors = <&gesture_l7_proc>;
+        };
     };
 
-    /* レイヤー7：タブ操作専用の受信機 */
-    gesture_l7_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-        layers = <7>;
-        input-processors = <&gesture_tabs_proc>;
+    /* 2. ジェスチャー動作の定義 (Processor) */
+    gesture_l7_proc: gesture_l7_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <5>;            /* 参考値 */
+        movement-threshold = <6>;      /* 参考値 */
+        idle-timeout-ms = <100>;       /* 参考値 */
+        gesture-cooldown-ms = <120>;   /* 参考値 */
+
+        /* 参考コードのバインディングを移植 */
+        prev_tab    { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
+        next_tab    { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
+        Create_tab  { pattern = <GESTURE_UP>;    bindings = <&kp LC(T)>;       };
+        close_tab   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(W)>;       };
     };
 
-    /* ジェスチャーの動作本体 */
+    /* 矢印用 (Processor) */
     gesture_arrows_proc: gesture_arrows_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
@@ -35,18 +55,9 @@
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
     };
+};
 
-    gesture_tabs_proc: gesture_tabs_proc {
-        compatible = "zmk,input-processor-mouse-gesture";
-        #input-processor-cells = <0>;
-        enable-eager-mode;
-        stroke-size = <10>;
-        movement-threshold = <6>;
-        idle-timeout-ms = <100>;
-        gesture-cooldown-ms = <150>;
-        prev_tab  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
-        next_tab  { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
-        close_tab { pattern = <GESTURE_UP>;    bindings = <&kp LC(W)>;       };
-        restore   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LS(T))>;   };
-    };
+/* 3. 基板側の標準リスナーを無効化 */
+&trackball_listener {
+    status = "disabled";
 };
