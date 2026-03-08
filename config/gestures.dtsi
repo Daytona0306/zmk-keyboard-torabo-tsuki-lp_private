@@ -1,15 +1,11 @@
-/* トラックボールジェスチャー補正版 (レイヤー5: 矢印キー専用) */
+/* 実装できていたコードをベースにした【完全版】 */
+#include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <mouse-gesture.dtsi>
 
-/ {
-    /* 方向補正用の定義：90度回転の設定 */
-    /* compatible を zmk,input-processor-transform に修正することで binding エラーを解消します */
-    gesture_fix_transform: gesture_fix_transform {
-        compatible = "zmk,input-processor-transform";
-        #input-processor-cells = <1>;
-    };
+/* mouse-gesture.h で定義されているので、ここの #define は削除して衝突を防ぎます */
 
+/ {
     layer_listeners {
         compatible = "zmk,layer-listeners";
         gesture_on_l5 {
@@ -22,8 +18,9 @@
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-        stroke-size = <10>; 
-        movement-threshold = <5>;
+        /* 感度を少し上げて、左右も反応しやすくします */
+        stroke-size = <8>; 
+        movement-threshold = <4>;
         idle-timeout-ms = <100>;
         gesture-cooldown-ms = <100>;
 
@@ -37,13 +34,14 @@
 &trackball_listener {
     gest_on_l5 {
         layers = <5>;
-        /* * 1. 6 (XY_SWAP | Y_INVERT) で 90度回転補正
-         * 2. ジェスチャー判定
-         * 3. 最後にカーソル移動を殺す 
-         */
         input-processors = <
-            &gesture_fix_transform 6
+            /* 差分1：ここで方向を入れ替えて「上→左」を「上→上」に直す */
+            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
+            
+            /* 差分2：補正された方向でジェスチャー判定 */
             &gesture_l5_proc 
+            
+            /* 差分3：ジェスチャー中（レイヤー5中）はカーソルを完全に止める */
             &zip_xy_scaler 0 1
         >;
     };
