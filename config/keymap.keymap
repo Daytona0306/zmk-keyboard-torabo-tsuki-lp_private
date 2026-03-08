@@ -56,18 +56,8 @@
         };
 
         combo_ctrl_alt_tab {
-            /* 同時に押すキーの番号を指定してください */
-            /* 例: 12番と13番のキーを同時押し */
-
             key-positions = <15 16>;
-
-            /* ホールド: レイヤー5 / タップ: LC(LA(TAB)) */
-
             bindings = <&kp LA(LC(TAB))>;
-
-            /* 同時押しの猶予時間（ms） */
-
-            timeout-ms = <30>;
         };
     };
 
@@ -102,16 +92,6 @@
 
             #binding-cells = <2>;
             tapping-term-ms = <180>;
-        };
-
-        // ホールドでレイヤー5、タップで Ctrl+Alt+Tab
-
-        ht_l5_cat: ht_l5_cat {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "tap-preferred"; // タップを優先する設定（コンボと相性が良い）
-            tapping-term-ms = <200>;   /* ホールドと判定する時間（お好みで調整） */
-            bindings = <&mo>, <&kp>;
         };
     };
 
