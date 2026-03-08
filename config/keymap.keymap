@@ -55,7 +55,7 @@
             key-positions = <48 49>;
         };
 
-        combo_layer5_ctrl_alt_tab {
+        combo_ctrl_alt_tab {
             /* 同時に押すキーの番号を指定してください */
             /* 例: 12番と13番のキーを同時押し */
 
@@ -63,7 +63,7 @@
 
             /* ホールド: レイヤー5 / タップ: LC(LA(TAB)) */
 
-            bindings = <&ht_l5_cat 5 LC(LA(TAB))>;
+            bindings = <&kp LA(LC(TAB))>;
 
             /* 同時押しの猶予時間（ms） */
 
