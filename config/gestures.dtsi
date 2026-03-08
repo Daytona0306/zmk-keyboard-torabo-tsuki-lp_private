@@ -1,54 +1,60 @@
-/* 1. 矢印＆タスク選択レイヤー */
-&gesture_arrows {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>; 
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <100>;
-    up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
-    down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
-    left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
-    right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
-};
+/* トラックボールジェスチャー定義 */
 
-/* 2. 仮想デスクトップ＆ウィンドウ操作レイヤー */
-&gesture_vdesk {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <15>; 
-    movement-threshold = <8>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <250>;
-    desk_left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;  };
-    desk_right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>; };
-    win_move_right { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; };
-    win_move_left  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  };
-};
+/ {
+    behaviors {
+        /* 1. 矢印＆タスク選択レイヤー */
+        gesture_arrows: gesture_arrows {
+            compatible = "zmk,behavior-mouse-gesture";
+            enable-eager-mode;
+            stroke-size = <10>; 
+            movement-threshold = <6>;
+            idle-timeout-ms = <100>;
+            gesture-cooldown-ms = <100>;
+            up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
+            down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
+            left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
+            right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
+        };
 
-/* 3. ブラウザ＆エクスプローラー操作レイヤー */
-&gesture_explorer {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>;
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <150>;
-    back    { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  };
-    forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
-    up_dir  { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    };
-};
+        /* 2. 仮想デスクトップ＆ウィンドウ操作レイヤー */
+        gesture_vdesk: gesture_vdesk {
+            compatible = "zmk,behavior-mouse-gesture";
+            enable-eager-mode;
+            stroke-size = <15>; 
+            movement-threshold = <8>;
+            idle-timeout-ms = <100>;
+            gesture-cooldown-ms = <250>;
+            desk_left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;  };
+            desk_right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>; };
+            win_move_right { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; };
+            win_move_left  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  };
+        };
 
-/* 4. ブラウザタブ操作レイヤー */
-&gesture_tabs {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>;
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <150>;
-    prev_tab  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
-    next_tab  { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
-    close_tab { pattern = <GESTURE_UP>;    bindings = <&kp LC(W)>;       };
-    restore   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LS(T))>;   };
+        /* 3. ブラウザ＆エクスプローラー操作レイヤー */
+        gesture_explorer: gesture_explorer {
+            compatible = "zmk,behavior-mouse-gesture";
+            enable-eager-mode;
+            stroke-size = <10>;
+            movement-threshold = <6>;
+            idle-timeout-ms = <100>;
+            gesture-cooldown-ms = <150>;
+            back    { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  };
+            forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
+            up_dir  { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    };
+        };
+
+        /* 4. ブラウザタブ操作レイヤー */
+        gesture_tabs: gesture_tabs {
+            compatible = "zmk,behavior-mouse-gesture";
+            enable-eager-mode;
+            stroke-size = <10>;
+            movement-threshold = <6>;
+            idle-timeout-ms = <100>;
+            gesture-cooldown-ms = <150>;
+            prev_tab  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
+            next_tab  { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
+            close_tab { pattern = <GESTURE_UP>;    bindings = <&kp LC(W)>;       };
+            restore   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LS(T))>;   };
+        };
+    };
 };
