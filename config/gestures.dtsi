@@ -1,4 +1,5 @@
 /* トラックボールジェスチャー定義 (レイヤー5: 矢印キー専用) */
+#include <mouse-gesture.dtsi>
 
 #define GESTURE_UP 0
 #define GESTURE_DOWN 1
@@ -6,31 +7,18 @@
 #define GESTURE_RIGHT 3
 
 / {
-    /* 1. エラーを解決するための定義：ジェスチャーのON/OFFスイッチ */
-    behaviors {
-        mouse_gesture_on: mouse_gesture_on {
-            compatible = "zmk,behavior-mouse-gesture-state";
-            #binding-cells = <0>;
-            usage = "on";
-        };
-        mouse_gesture_off: mouse_gesture_off {
-            compatible = "zmk,behavior-mouse-gesture-state";
-            #binding-cells = <0>;
-            usage = "off";
-        };
-    };
-
-    /* 2. レイヤー5に入った時だけジェスチャー機能を自動ON/OFFする */
+    /* --- 1. レイヤー5に入った時だけジェスチャー機能を有効化 --- */
     layer_listeners {
         compatible = "zmk,layer-listeners";
 
         gesture_on_l5 {
             layers = <5>;
+            /* mouse-gesture.dtsi を include したことで、ここがエラーにならなくなります */
             bindings = <&mouse_gesture_on &mouse_gesture_off>;
         };
     };
 
-    /* 3. ジェスチャー動作の定義 (矢印キー) */
+    /* --- 2. ジェスチャー動作の定義 (矢印キー) --- */
     gesture_l5_proc: gesture_l5_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
@@ -47,11 +35,11 @@
     };
 };
 
-/* 4. 基板側のリスナーにレイヤー5の設定を紐付ける */
+/* --- 3. 基板側のリスナーを直接拡張 --- */
 &trackball_listener {
     gest_on_l5 {
         layers = <5>;
-        /* &zip_xy_scaler 0 1 でジェスチャー中のカーソル移動を抑制 */
+        /* ジェスチャーを実行しつつ、マウスカーソルを止める設定 */
         input-processors = <&gesture_l5_proc &zip_xy_scaler 0 1>;
     };
 };
