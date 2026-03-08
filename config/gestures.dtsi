@@ -1,54 +1,46 @@
-/* 1. 矢印＆タスク選択レイヤー */
-&gesture_arrows {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>; 
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <100>;
-    up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
-    down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
-    left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
-    right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
+/* トラックボールジェスチャー最終修正版 (参考コードの作法を適用) */
+#include <input/processors.dtsi>            /* これが最重要：zip_xy系の定義を読み込む */
+#include <dt-bindings/zmk/input_transform.h>
+#include <mouse-gesture.dtsi>
+
+/ {
+    /* 1. レイヤー5に入った時だけジェスチャー機能をONにするスイッチ */
+    layer_listeners {
+        compatible = "zmk,layer-listeners";
+        gesture_on_l5 {
+            layers = <5>;
+            bindings = <&mouse_gesture_on &mouse_gesture_off>;
+        };
+    };
+
+    /* 2. ジェスチャー動作の定義 (矢印キー) */
+    gesture_l5_proc: gesture_l5_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <10>; 
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <100>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
+    };
 };
 
-/* 2. 仮想デスクトップ＆ウィンドウ操作レイヤー */
-&gesture_vdesk {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <15>; 
-    movement-threshold = <8>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <250>;
-    desk_left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;  };
-    desk_right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>; };
-    win_move_right { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; };
-    win_move_left  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  };
-};
-
-/* 3. ブラウザ＆エクスプローラー操作レイヤー */
-&gesture_explorer {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>;
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <150>;
-    back    { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  };
-    forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
-    up_dir  { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    };
-};
-
-/* 4. ブラウザタブ操作レイヤー */
-&gesture_tabs {
-    compatible = "zmk,behavior-mouse-gesture";
-    enable-eager-mode;
-    stroke-size = <10>;
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <150>;
-    prev_tab  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
-    next_tab  { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
-    close_tab { pattern = <GESTURE_UP>;    bindings = <&kp LC(W)>;       };
-    restore   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LS(T))>;   };
+/* 3. 基板側のリスナーを直接拡張 (参考コードの書き方を踏襲) */
+&trackball_listener {
+    gest_on_l5 {
+        layers = <5>;
+        /* * 自作ノードではなく、最初から用意されている &zip_xy_transform を使います。
+         * 「上に動かして左に入力される」のを直すため、XY入れ替え(SWAP)を指定します。
+         */
+        input-processors = <
+            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP 
+            &gesture_l5_proc 
+            &zip_xy_scaler 0 1
+        >;
+    };
 };
