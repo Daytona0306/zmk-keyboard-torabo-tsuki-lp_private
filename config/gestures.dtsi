@@ -60,3 +60,7 @@
     };
 };
 
+/* 基板側の標準リスナーを無効化（上記の routing に一本化するため） */
+&trackball_listener {
+    status = "disabled";
+};
