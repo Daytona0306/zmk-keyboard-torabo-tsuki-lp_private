@@ -1,53 +1,100 @@
-/* トラックボールジェスチャー定義: 矢印キー操作 (Layer 5) */
-
+/* トラックボール・マルチレイヤージェスチャー定義 */
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <mouse-gesture.dtsi>
 
 / {
-    /* 1. ジェスチャーエンジンの動的ON/OFF制御 */
+    /* 1. ジェスチャーエンジンの動的ON/OFF制御（対象レイヤーを一括指定） */
     layer_listeners {
         compatible = "zmk,layer-listeners";
-
-        arrow_gesture_switch {
-            layers = <5>;
+        gesture_switch {
+            layers = <5 7 8 9>;
             bindings = <&mouse_gesture_on &mouse_gesture_off>;
         };
     };
 
-    /* 2. ジェスチャー判定ロジックの設定 */
-    arrow_gesture_processor: arrow_gesture_processor {
+    /* 2. 各レイヤーのジェスチャー判定ロジック */
+
+    /* Layer 5: 矢印キー (Arrow Keys) - 安定重視設定 */
+    arrow_gest_proc: arrow_gest_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-
-        /* 感度設定: stroke-size(弾く距離), movement-threshold(判定開始の速さ) */
         stroke-size = <15>; 
         movement-threshold = <4>;
         idle-timeout-ms = <50>;
         gesture-cooldown-ms = <50>;
 
-        /* 方向と出力キーの紐付け */
         up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
         down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
     };
+
+    /* Layer 7: ブラウザタブ操作 (Tab Control) - 軽快さ重視 */
+    tab_gest_proc: tab_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <10>;          /* 矢印より少し軽めに設定 */
+        movement-threshold = <4>;
+        idle-timeout-ms = <50>;
+        gesture-cooldown-ms = <100>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(T)>;       }; /* 新規タブ */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(W)>;       }; /* タブを閉じる */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; }; /* 前のタブ */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     }; /* 次のタブ */
+    };
+
+    /* Layer 8: 仮想デスクトップ操作 (Virtual Desktops) - 誤爆防止重視 */
+    vdesktop_gest_proc: vdesktop_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <20>;         /* デスクトップ切り替えは大きく弾いた時のみ */
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; }; /* Win+Alt+Ctrl+Right */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  }; /* Win+Alt+Ctrl+Left */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;      }; /* デスクトップ左へ */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>;     }; /* デスクトップ右へ */
+    };
+
+    /* Layer 9: ナビゲーション (Forward/Back) */
+    nav_gest_proc: nav_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <15>;
+        movement-threshold = <4>;
+        idle-timeout-ms = <50>;
+        gesture-cooldown-ms = <150>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    }; /* 上の階層へ */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  }; /* 戻る */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; }; /* 進む */
+    };
 };
 
 /* 3. トラックボール信号のルーティング設定 */
 &trackball_listener {
-    arrow_gesture_route {
-        layers = <5>;
-        input-processors = <
-            /* センサーの向き補正: X反転とY反転を統合 */
-            &zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)
-            
-            /* ジェスチャー判定本体へ */
-            &arrow_gesture_processor 
-            
-            /* ジェスチャー中（L5）はマウスカーソルを移動させない */
-            &zip_xy_scaler 0 1
-        >;
-    };
+    /* 共通のマクロ定義: 指定したレイヤーにプロセッサを紐付ける */
+    #define GESTURE_ROUTE(L, PROC) \
+        route_l##L { \
+            layers = <L>; \
+            input-processors = < \
+                &zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) \
+                &PROC \
+                &zip_xy_scaler 0 1 \
+            >; \
+        };
+
+    /* 各レイヤーへのルート展開 */
+    GESTURE_ROUTE(5, arrow_gest_proc)
+    GESTURE_ROUTE(7, tab_gest_proc)
+    GESTURE_ROUTE(8, vdesktop_gest_proc)
+    GESTURE_ROUTE(9, nav_gest_proc)
 };
