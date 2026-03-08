@@ -173,13 +173,12 @@
             >;
         };
     };
-trackball_routing {
-        compatible = "zmk,input-listener-group";
+};
 
-        route_arrows {
-            layers = <5>;
-            device = <&trackball_central>;
-            input-processors = <&gesture_arrows>;
-        };
+&trackball_listener {
+    route_arrows {
+        layers = <5>; /* レイヤー5で矢印ジェスチャーを使う */
+        input-processors = <&gesture_arrows>;
     };
+
 };
