@@ -1,12 +1,16 @@
-/* トラックボールジェスチャー定義 */
+/* トラックボールジェスチャー定義 (torabo_tsuki_lp 用) */
+
 #define GESTURE_UP 0
 #define GESTURE_DOWN 1
 #define GESTURE_LEFT 2
 #define GESTURE_RIGHT 3
 
-/ {
-    /* 1. 矢印＆タスク選択レイヤー */
-    gesture_arrows: gesture_arrows {
+/* 基板側にある trackball_listener に、レイヤー別のジェスチャー処理を追加します */
+&trackball_listener {
+
+    /* 1. 矢印＆タスク選択 (レイヤー5) */
+    gesture_arrows {
+        layers = <5>;
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
@@ -20,8 +24,9 @@
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
     };
 
-    /* 2. 仮想デスクトップ＆ウィンドウ操作レイヤー */
-    gesture_vdesk: gesture_vdesk {
+    /* 2. 仮想デスクトップ＆ウィンドウ操作 (レイヤー8) */
+    gesture_vdesk {
+        layers = <8>;
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
@@ -35,8 +40,9 @@
         win_move_left  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  };
     };
 
-    /* 3. ブラウザ＆エクスプローラー操作レイヤー */
-    gesture_explorer: gesture_explorer {
+    /* 3. ブラウザ＆エクスプローラー操作 (レイヤー9) */
+    gesture_explorer {
+        layers = <9>;
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
@@ -49,8 +55,9 @@
         up_dir  { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    };
     };
 
-    /* 4. ブラウザタブ操作レイヤー */
-    gesture_tabs: gesture_tabs {
+    /* 4. ブラウザタブ操作 (レイヤー7) */
+    gesture_tabs {
+        layers = <7>;
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
