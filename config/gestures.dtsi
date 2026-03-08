@@ -1,5 +1,8 @@
 /* トラックボールジェスチャー定義 */
-#include <dt-bindings/zmk/mouse_gesture.h>
+#define GESTURE_UP 0
+#define GESTURE_DOWN 1
+#define GESTURE_LEFT 2
+#define GESTURE_RIGHT 3
 
 / {
     behaviors {
