@@ -1,4 +1,5 @@
 /* トラックボールジェスチャー定義 */
+#include <dt-bindings/zmk/mouse_gesture.h>
 
 / {
     behaviors {
