@@ -22,7 +22,7 @@
         enable-eager-mode;
 
         /* 感度設定: stroke-size(弾く距離), movement-threshold(判定開始の速さ) */
-        stroke-size = <8>; 
+        stroke-size = <15>; 
         movement-threshold = <4>;
         idle-timeout-ms = <50>;
         gesture-cooldown-ms = <50>;
