@@ -1,16 +1,28 @@
-/* トラックボールジェスチャー定義 (torabo_tsuki_lp 用) */
-
+/* トラックボールジェスチャー定義 */
 #define GESTURE_UP 0
 #define GESTURE_DOWN 1
 #define GESTURE_LEFT 2
 #define GESTURE_RIGHT 3
 
-/* 基板側にある trackball_listener に、レイヤー別のジェスチャー処理を追加します */
-&trackball_listener {
-
-    /* 1. 矢印＆タスク選択 (レイヤー5) */
-    gesture_arrows {
+/ {
+    /* レイヤー5：矢印ジェスチャー専用の受信機 */
+    gesture_l5_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
         layers = <5>;
+        input-processors = <&gesture_arrows_proc>;
+    };
+
+    /* レイヤー7：タブ操作専用の受信機 */
+    gesture_l7_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+        layers = <7>;
+        input-processors = <&gesture_tabs_proc>;
+    };
+
+    /* ジェスチャーの動作本体 */
+    gesture_arrows_proc: gesture_arrows_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
@@ -24,40 +36,7 @@
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp RIGHT>; };
     };
 
-    /* 2. 仮想デスクトップ＆ウィンドウ操作 (レイヤー8) */
-    gesture_vdesk {
-        layers = <8>;
-        compatible = "zmk,input-processor-mouse-gesture";
-        #input-processor-cells = <0>;
-        enable-eager-mode;
-        stroke-size = <15>; 
-        movement-threshold = <8>;
-        idle-timeout-ms = <100>;
-        gesture-cooldown-ms = <250>;
-        desk_left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;  };
-        desk_right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>; };
-        win_move_right { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; };
-        win_move_left  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  };
-    };
-
-    /* 3. ブラウザ＆エクスプローラー操作 (レイヤー9) */
-    gesture_explorer {
-        layers = <9>;
-        compatible = "zmk,input-processor-mouse-gesture";
-        #input-processor-cells = <0>;
-        enable-eager-mode;
-        stroke-size = <10>;
-        movement-threshold = <6>;
-        idle-timeout-ms = <100>;
-        gesture-cooldown-ms = <150>;
-        back    { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  };
-        forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
-        up_dir  { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    };
-    };
-
-    /* 4. ブラウザタブ操作 (レイヤー7) */
-    gesture_tabs {
-        layers = <7>;
+    gesture_tabs_proc: gesture_tabs_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
