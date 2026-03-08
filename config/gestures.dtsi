@@ -9,6 +9,7 @@
         /* 1. 矢印＆タスク選択レイヤー */
         gesture_arrows: gesture_arrows {
             compatible = "zmk,behavior-mouse-gesture";
+            #binding-cells = <0>; /* ← これを追加 */
             enable-eager-mode;
             stroke-size = <10>; 
             movement-threshold = <6>;
@@ -23,6 +24,7 @@
         /* 2. 仮想デスクトップ＆ウィンドウ操作レイヤー */
         gesture_vdesk: gesture_vdesk {
             compatible = "zmk,behavior-mouse-gesture";
+            #binding-cells = <0>; /* ← これを追加 */
             enable-eager-mode;
             stroke-size = <15>; 
             movement-threshold = <8>;
@@ -37,6 +39,7 @@
         /* 3. ブラウザ＆エクスプローラー操作レイヤー */
         gesture_explorer: gesture_explorer {
             compatible = "zmk,behavior-mouse-gesture";
+            #binding-cells = <0>; /* ← これを追加 */
             enable-eager-mode;
             stroke-size = <10>;
             movement-threshold = <6>;
@@ -50,6 +53,7 @@
         /* 4. ブラウザタブ操作レイヤー */
         gesture_tabs: gesture_tabs {
             compatible = "zmk,behavior-mouse-gesture";
+            #binding-cells = <0>; /* ← これを追加 */
             enable-eager-mode;
             stroke-size = <10>;
             movement-threshold = <6>;
