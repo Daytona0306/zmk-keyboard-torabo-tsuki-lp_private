@@ -6,7 +6,21 @@
 #define GESTURE_RIGHT 3
 
 / {
-    /* --- 1. レヤー5に入った時だけジェスチャー機能をONにする --- */
+    /* 1. エラーを解決するための定義：ジェスチャーのON/OFFスイッチ */
+    behaviors {
+        mouse_gesture_on: mouse_gesture_on {
+            compatible = "zmk,behavior-mouse-gesture-state";
+            #binding-cells = <0>;
+            usage = "on";
+        };
+        mouse_gesture_off: mouse_gesture_off {
+            compatible = "zmk,behavior-mouse-gesture-state";
+            #binding-cells = <0>;
+            usage = "off";
+        };
+    };
+
+    /* 2. レイヤー5に入った時だけジェスチャー機能を自動ON/OFFする */
     layer_listeners {
         compatible = "zmk,layer-listeners";
 
@@ -16,7 +30,7 @@
         };
     };
 
-    /* --- 2. ジェスチャー動作の定義 (矢印キー) --- */
+    /* 3. ジェスチャー動作の定義 (矢印キー) */
     gesture_l5_proc: gesture_l5_proc {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
@@ -33,11 +47,11 @@
     };
 };
 
-/* --- 3. 基板側のリスナーにレイヤー5の設定を紐付ける --- */
+/* 4. 基板側のリスナーにレイヤー5の設定を紐付ける */
 &trackball_listener {
-    /* レイヤー5の時だけジェスチャーを実行し、同時にカーソル移動を止める */
     gest_on_l5 {
         layers = <5>;
+        /* &zip_xy_scaler 0 1 でジェスチャー中のカーソル移動を抑制 */
         input-processors = <&gesture_l5_proc &zip_xy_scaler 0 1>;
     };
 };
