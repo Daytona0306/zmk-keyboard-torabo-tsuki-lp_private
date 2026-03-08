@@ -35,13 +35,7 @@
     gest_on_l5 {
         layers = <5>;
         input-processors = <
-            /* 差分1：ここで方向を入れ替えて「上→左」を「上→上」に直す */
-            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
-            
-            /* 差分2：補正された方向でジェスチャー判定 */
             &gesture_l5_proc 
-            
-            /* 差分3：ジェスチャー中（レイヤー5中）はカーソルを完全に止める */
             &zip_xy_scaler 0 1
         >;
     };
