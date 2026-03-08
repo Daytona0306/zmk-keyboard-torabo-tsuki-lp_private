@@ -1,31 +1,13 @@
 /* トラックボールジェスチャー補正版 (レイヤー5: 矢印キー専用) */
-#include <dt-bindings/zmk/input_transform.h> /* 回転定義の読み込み */
+#include <dt-bindings/zmk/input_transform.h>
 #include <mouse-gesture.dtsi>
 
-#define GESTURE_UP 0
-#define GESTURE_DOWN 1
-#define GESTURE_LEFT 2
-#define GESTURE_RIGHT 3
-
 / {
-    /* 方向補正用の定義：90度回転させて向きを合わせる */
-    /* 上→左になる場合は、ここを回転させることで解消します */
+    /* 方向補正用の定義：90度回転の設定 */
+    /* Swap(4) + Y-Invert(2) = 6 を指定することで、上→左のズレを解消します */
     gesture_fix_transform: gesture_fix_transform {
         compatible = "zmk,input-processor-xy-transform";
         #input-processor-cells = <1>;
-    };
-
-    behaviors {
-        mouse_gesture_on: mouse_gesture_on {
-            compatible = "zmk,behavior-mouse-gesture-state";
-            #binding-cells = <0>;
-            usage = "on";
-        };
-        mouse_gesture_off: mouse_gesture_off {
-            compatible = "zmk,behavior-mouse-gesture-state";
-            #binding-cells = <0>;
-            usage = "off";
-        };
     };
 
     layer_listeners {
@@ -40,12 +22,13 @@
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-        /* 感度を少し上げ（小さくし）、左右も反応しやすく調整 */
-        stroke-size = <8>; 
-        movement-threshold = <4>;
+        /* 感度調整 */
+        stroke-size = <10>; 
+        movement-threshold = <5>;
         idle-timeout-ms = <100>;
         gesture-cooldown-ms = <100>;
 
+        /* 定数は自動読み込みされるため、#define は不要です */
         up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
         down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
@@ -56,12 +39,12 @@
 &trackball_listener {
     gest_on_l5 {
         layers = <5>;
-        /* * 1. &gesture_fix_transform INPUT_TRANSFORM_90 : ここで90度回転させて向きを修正
-         * 2. &gesture_l5_proc : 修正された方向でジェスチャー判定
-         * 3. &zip_xy_scaler 0 1 : 最後にカーソル移動を殺す
+        /* * 1. 6 (XY_SWAP | Y_INVERT) で 90度回転補正
+         * 2. ジェスチャー判定
+         * 3. 最後にカーソル移動を殺す 
          */
         input-processors = <
-            &gesture_fix_transform INPUT_TRANSFORM_90 
+            &gesture_fix_transform 6
             &gesture_l5_proc 
             &zip_xy_scaler 0 1
         >;
