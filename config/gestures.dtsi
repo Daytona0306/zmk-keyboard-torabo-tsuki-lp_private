@@ -4,9 +4,9 @@
 
 / {
     /* 方向補正用の定義：90度回転の設定 */
-    /* Swap(4) + Y-Invert(2) = 6 を指定することで、上→左のズレを解消します */
+    /* compatible を zmk,input-processor-transform に修正することで binding エラーを解消します */
     gesture_fix_transform: gesture_fix_transform {
-        compatible = "zmk,input-processor-xy-transform";
+        compatible = "zmk,input-processor-transform";
         #input-processor-cells = <1>;
     };
 
@@ -22,13 +22,11 @@
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-        /* 感度調整 */
         stroke-size = <10>; 
         movement-threshold = <5>;
         idle-timeout-ms = <100>;
         gesture-cooldown-ms = <100>;
 
-        /* 定数は自動読み込みされるため、#define は不要です */
         up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
         down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
