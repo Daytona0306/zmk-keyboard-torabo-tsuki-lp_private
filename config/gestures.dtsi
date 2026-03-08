@@ -1,29 +1,33 @@
-/* 実装できていたコードをベースにした【完全版】 */
+/* トラックボールジェスチャー定義: 矢印キー操作 (Layer 5) */
+
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <mouse-gesture.dtsi>
 
-/* mouse-gesture.h で定義されているので、ここの #define は削除して衝突を防ぎます */
-
 / {
+    /* 1. ジェスチャーエンジンの動的ON/OFF制御 */
     layer_listeners {
         compatible = "zmk,layer-listeners";
-        gesture_on_l5 {
+
+        arrow_gesture_switch {
             layers = <5>;
             bindings = <&mouse_gesture_on &mouse_gesture_off>;
         };
     };
 
-    gesture_l5_proc: gesture_l5_proc {
+    /* 2. ジェスチャー判定ロジックの設定 */
+    arrow_gesture_processor: arrow_gesture_processor {
         compatible = "zmk,input-processor-mouse-gesture";
         #input-processor-cells = <0>;
         enable-eager-mode;
-        /* 感度を少し上げて、左右も反応しやすくします */
+
+        /* 感度設定: stroke-size(弾く距離), movement-threshold(判定開始の速さ) */
         stroke-size = <8>; 
         movement-threshold = <4>;
-        idle-timeout-ms = <100>;
-        gesture-cooldown-ms = <100>;
+        idle-timeout-ms = <50>;
+        gesture-cooldown-ms = <50>;
 
+        /* 方向と出力キーの紐付け */
         up    { pattern = <GESTURE_UP>;    bindings = <&kp UP>;    };
         down  { pattern = <GESTURE_DOWN>;  bindings = <&kp DOWN>;  };
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LEFT>;  };
@@ -31,13 +35,18 @@
     };
 };
 
+/* 3. トラックボール信号のルーティング設定 */
 &trackball_listener {
-    gest_on_l5 {
+    arrow_gesture_route {
         layers = <5>;
         input-processors = <
-            &zip_xy_transform INPUT_TRANSFORM_X_INVERT
-            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
-            &gesture_l5_proc 
+            /* センサーの向き補正: X反転とY反転を統合 */
+            &zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)
+            
+            /* ジェスチャー判定本体へ */
+            &arrow_gesture_processor 
+            
+            /* ジェスチャー中（L5）はマウスカーソルを移動させない */
             &zip_xy_scaler 0 1
         >;
     };
