@@ -41,7 +41,7 @@
         idle-timeout-ms = <50>;
         gesture-cooldown-ms = <100>;
 
-        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(T)>;       }; /* 新規タブ */
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(LS(T))>;   }; /* タブを復元 */
         down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(W)>;       }; /* タブを閉じる */
         left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; }; /* 前のタブ */
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     }; /* 次のタブ */
