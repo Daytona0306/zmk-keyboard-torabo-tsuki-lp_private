@@ -59,6 +59,21 @@
             key-positions = <15 16>;
             bindings = <&kp LA(LC(TAB))>;
         };
+
+        L7 {
+            bindings = <&mo 7>;
+            key-positions = <41 42>;
+        };
+
+        L8 {
+            bindings = <&mo 8>;
+            key-positions = <42 43>;
+        };
+
+        L9 {
+            bindings = <&mo 9>;
+            key-positions = <43 44>;
+        };
     };
 
     macros {
