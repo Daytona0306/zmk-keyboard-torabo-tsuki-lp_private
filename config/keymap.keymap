@@ -59,21 +59,6 @@
             key-positions = <15 16>;
             bindings = <&kp LA(LC(TAB))>;
         };
-
-        L7 {
-            bindings = <&mo 7>;
-            key-positions = <41 42>;
-        };
-
-        L8 {
-            bindings = <&mo 8>;
-            key-positions = <27 26>;
-        };
-
-        L9 {
-            bindings = <&mo 9>;
-            key-positions = <29 28>;
-        };
     };
 
     macros {
@@ -115,11 +100,11 @@
 
         default_layer {
             bindings = <
-&trans  &trans            &trans    &trans   &trans                       &trans                                                 &trans       &trans  &trans   &trans           &trans                      &trans
-&trans  &kp Q             &kp L     &kp U    &kp COMMA                    &kp PERIOD                                             &kp F        &kp W   &kp R    &kp Y            &kp P                       &trans
-&trans  &mt LCTRL E       &kp I     &lt 5 A  &lt 3 O                      &kp MINUS      &trans                      &trans      &kp K        &kp T   &lt 5 N  &kp S            &kp H                       &trans
-&trans  &mt LEFT_SHIFT Z  &kp X     &kp C    &kp V                        &kp SEMICOLON  &kp LA(LG(K))               &kp C_MUTE  &kp G        &kp D   &kp M    &mt RIGHT_ALT J  &lt 3 B                     &trans
-&trans  &kp LEFT_ALT      &kp LGUI  &kp TAB  &mt LEFT_SHIFT INT_MUHENKAN  &lt 4 ENTER    &mt LEFT_CONTROL BACKSPACE  &lt 2 DEL   &lt 1 SPACE  &trans  &trans   &kp RIGHT_ALT    &mt RIGHT_SHIFT INT_HENKAN  &trans
+&trans  &trans            &trans    &trans    &trans                       &trans                                                 &trans       &trans  &trans   &trans           &trans                      &trans
+&trans  &lt 11 Q          &lt 8 L   &lt 10 U  &lt 7 COMMA                  &lt 9 PERIOD                                           &kp F        &kp W   &kp R    &kp Y            &kp P                       &trans
+&trans  &mt LCTRL E       &kp I     &lt 5 A   &lt 3 O                      &kp MINUS      &trans                      &trans      &kp K        &kp T   &lt 5 N  &kp S            &kp H                       &trans
+&trans  &mt LEFT_SHIFT Z  &kp X     &kp C     &kp V                        &kp SEMICOLON  &kp LA(LG(K))               &kp C_MUTE  &kp G        &kp D   &kp M    &mt RIGHT_ALT J  &lt 3 B                     &trans
+&trans  &kp LEFT_ALT      &kp LGUI  &kp TAB   &mt LEFT_SHIFT INT_MUHENKAN  &lt 4 ENTER    &mt LEFT_CONTROL BACKSPACE  &lt 2 DEL   &lt 1 SPACE  &trans  &trans   &kp RIGHT_ALT    &mt RIGHT_SHIFT INT_HENKAN  &trans
             >;
         };
 
@@ -204,6 +189,26 @@
         };
 
         layer_9 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        layer_10 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        layer_11 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
