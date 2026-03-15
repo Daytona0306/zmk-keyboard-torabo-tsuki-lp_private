@@ -1,14 +1,32 @@
 /* トラックボール・マルチレイヤージェスチャー定義 */
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
+#include <dt-bindings/zmk/keys.h> /* マクロでキーコードを使用するために追加 */
 #include <mouse-gesture.dtsi>
 
 / {
+    /* --- 追加: エクスプローラ整地マクロの定義 --- */
+    macros {
+        exp_normalize: exp_normalize {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <40>;
+            bindings
+                = <&kp LC(LS(N6))>   /* 1. 詳細表示 (Ctrl+Shift+6) */
+                , <&kp LC(KP_PLUS)>  /* 2. 全列の幅を自動調整 (Ctrl+テンキーPlus) */
+                , <&kp ESC>          /* 3. 選択解除 */
+                , <&kp HOME>         /* 4. リストの先頭へ移動 */
+                ;
+        };
+    };
+
     /* 1. ジェスチャーエンジンの動的ON/OFF制御（対象レイヤーを一括指定） */
     layer_listeners {
         compatible = "zmk,layer-listeners";
         gesture_switch {
-            layers = <5 7 8 9>;
+            /* ★更新: L10(ウィンドウ管理)とL11(PowerToys)を追加 */
+            layers = <5 7 8 9 10 11>;
             bindings = <&mouse_gesture_on &mouse_gesture_off>;
         };
     };
@@ -57,10 +75,11 @@
         idle-timeout-ms = <100>;
         gesture-cooldown-ms = <200>;
 
-        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(LA(LG(RIGHT)))>; }; /* Win+Alt+Ctrl+Right */
-        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LA(LG(LEFT)))>;  }; /* Win+Alt+Ctrl+Left */
-        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>;      }; /* デスクトップ左へ */
-        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>;     }; /* デスクトップ右へ */
+        /* ★更新: 上下をタスクビューとタスク切り替えに変更 */
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LG(TAB)>; };     /* タスクビュー */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LA(TAB)>; };     /* タスク切り替え */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LG(LEFT))>; }; /* デスクトップ左へ */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LG(RIGHT))>; };/* デスクトップ右へ */
     };
 
     /* Layer 9: ナビゲーション (Forward/Back) */
@@ -73,9 +92,42 @@
         idle-timeout-ms = <100>;
         gesture-cooldown-ms = <200>;
 
-        up    { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>;    }; /* 上の階層へ */
-        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>;  }; /* 戻る */
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LA(UP)>; };    /* 上の階層へ */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&exp_normalize>; };/* ★追加: 表示リセットマクロ */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LA(LEFT)>; };  /* 戻る */
         right { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; }; /* 進む */
+    };
+
+    /* ★新規 Layer 10: ウィンドウマネジメント */
+    win_gest_proc: win_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <20>; 
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LG(UP)>;    }; /* 最大化 */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LG(DOWN)>;  }; /* 最小化/元に戻す */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LG(LEFT)>;  }; /* 左半分にスナップ */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LG(RIGHT)>; }; /* 右半分にスナップ */
+    };
+
+    /* ★新規 Layer 11: PowerToys拡張 */
+    powertoys_gest_proc: powertoys_gest_proc {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <25>;  /* 誤爆防止のため少しだけ遊びを長めに設定 */
+        movement-threshold = <5>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <200>;
+
+        up    { pattern = <GESTURE_UP>;    bindings = <&kp LC(LG(T))>;       }; /* 常に手前に表示 */
+        down  { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(LS(LG(R)))>;   }; /* Crop And Lock */
+        left  { pattern = <GESTURE_LEFT>;  bindings = <&kp LS(LG(H))>;       }; /* マウスクリックのハイライト */
+        right { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(LG(P))>;       }; /* 十字線ポインタ */
     };
 };
 
@@ -97,4 +149,7 @@
     GESTURE_ROUTE(7, tab_gest_proc)
     GESTURE_ROUTE(8, vdesktop_gest_proc)
     GESTURE_ROUTE(9, nav_gest_proc)
+    /* ★追加: 新規レイヤーのルート展開 */
+    GESTURE_ROUTE(10, win_gest_proc)
+    GESTURE_ROUTE(11, powertoys_gest_proc)
 };
